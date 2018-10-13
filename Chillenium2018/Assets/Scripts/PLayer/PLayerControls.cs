@@ -15,6 +15,7 @@ public class PLayerControls : MonoBehaviour {
     Rigidbody2D myRB;
     Liftable carrying;
     GridScript TheGrid;
+    bool movelock = false;
 
     // Use this for initialization
     void Start () {
@@ -28,6 +29,7 @@ public class PLayerControls : MonoBehaviour {
         PlayerMovement();
         Pickup();
         CheckGrabbable();
+        Build();
 	}
 
     void CheckGrabbable()
@@ -49,8 +51,9 @@ public class PLayerControls : MonoBehaviour {
     //Build with Z
     void Build()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKey(KeyCode.Z))
         {
+            movelock = true;
             bool anyBuildable=false;
             Liftable buildable = null;
             Collider2D[] circleHit = Physics2D.OverlapCircleAll(transform.position, GrabDistance);
@@ -65,7 +68,19 @@ public class PLayerControls : MonoBehaviour {
             }
             if (anyBuildable)
             {
-                //Instantiate
+                movelock = false;
+                buildable.Build();
+            }
+        }
+        if (Input.GetKeyUp(KeyCode.Z))
+        {
+            Collider2D[] circleHit = Physics2D.OverlapCircleAll(transform.position, GrabDistance);
+            foreach (Collider2D coll in circleHit)
+            {
+                if (coll.GetComponent<Liftable>())
+                {
+                    coll.GetComponent<Liftable>().CancelBuild();
+                }
             }
         }
     }
@@ -153,10 +168,12 @@ public class PLayerControls : MonoBehaviour {
     }
 
     //Debug shit
-    void OnDrawGizmosSelected()
+    /*void OnDrawGizmosSelected()
     {
          // Draw a yellow sphere at the transform's position
          Gizmos.color = Color.yellow;
          Gizmos.DrawWireSphere(transform.position, GrabDistance);
-    }
+         Gizmos.color = Color.blue;
+         Gizmos.DrawLine(transform.position, transform.InverseTransformDirection(myRB.velocity)+ transform.position);
+    }*/
 }
