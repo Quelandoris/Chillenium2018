@@ -12,9 +12,13 @@ public class LiftableCanvas : MonoBehaviour {
     void LateUpdate () {
         if (myBox.isBuildable && !myBox.onSpawner && !ButtonY.activeSelf)
         {
+
             ButtonY.SetActive(true);
         }
-        else if(myBox.onSpawner && ButtonY.activeSelf) ButtonY.SetActive(false);
+        else if (!myBox.isBuildable || (myBox.onSpawner && ButtonY.activeSelf))
+        {
+            ButtonY.SetActive(false);
+        }
         
         
 	}
