@@ -61,6 +61,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Construction\Liftable.cs" />
+    <Compile Include="Assets\Scripts\Construction\LiftableCanvas.cs" />
+    <Compile Include="Assets\Scripts\Construction\LiftableSpawner.cs" />
+    <Compile Include="Assets\Scripts\PLayer\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\PLayer\PLayerControls.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Users/Aaron/Documents/Chillenium2018/Chillenium2018/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
