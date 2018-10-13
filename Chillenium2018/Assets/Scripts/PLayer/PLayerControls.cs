@@ -14,29 +14,73 @@ public class PLayerControls : MonoBehaviour {
     Transform myTransform;
     Rigidbody2D myRB;
     Liftable carrying;
-    
+    GridScript TheGrid;
+    bool movelock = false;
+
     // Use this for initialization
-	void Start () {
+    void Start () {
         myTransform = GetComponent<Transform>();
         myRB = GetComponent<Rigidbody2D>();
+        TheGrid = FindObjectOfType<GridScript>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
         PlayerMovement();
         Pickup();
+        CheckGrabbable();
+        Build();
 	}
 
     void CheckGrabbable()
     {
-        Collider2D[] circleHit = Physics2D.OverlapCircleAll(transform.position, GrabDistance);
-        Liftable LiftableHit = null;
-        foreach (Collider2D coll in circleHit)
+        if (!carrying)
         {
-            if (coll.GetComponent<Liftable>() != null)
+            Collider2D[] circleHit = Physics2D.OverlapCircleAll(transform.position, GrabDistance);
+            foreach (Collider2D coll in circleHit)
             {
-                Debug.Log("LiftableFound");
-                LiftableHit.near = true;
+                if (coll.GetComponent<Liftable>())
+                {
+                    coll.GetComponent<Liftable>().near = true;
+                    break;
+                }
+            }
+        }
+    }
+
+    //Build with Z
+    void Build()
+    {
+        if (Input.GetKey(KeyCode.Z))
+        {
+            movelock = true;
+            bool anyBuildable=false;
+            Liftable buildable = null;
+            Collider2D[] circleHit = Physics2D.OverlapCircleAll(transform.position, GrabDistance);
+            foreach (Collider2D coll in circleHit)
+            {
+                if (coll.GetComponent<Liftable>())
+                {
+                    anyBuildable = true;
+                    buildable = coll.GetComponent<Liftable>();
+                    break;
+                }
+            }
+            if (anyBuildable)
+            {
+                movelock = false;
+                buildable.Build();
+            }
+        }
+        if (Input.GetKeyUp(KeyCode.Z))
+        {
+            Collider2D[] circleHit = Physics2D.OverlapCircleAll(transform.position, GrabDistance);
+            foreach (Collider2D coll in circleHit)
+            {
+                if (coll.GetComponent<Liftable>())
+                {
+                    coll.GetComponent<Liftable>().CancelBuild();
+                }
             }
         }
     }
@@ -80,6 +124,7 @@ public class PLayerControls : MonoBehaviour {
             {
                 carrying.Carrier = null;
                 carrying.carried = false;
+                carrying.transform.position=TheGrid.NearestPointOnGrid(carrying.transform.position);
                 carrying = null;
             }
         }
@@ -123,10 +168,12 @@ public class PLayerControls : MonoBehaviour {
     }
 
     //Debug shit
-    void OnDrawGizmosSelected()
+    /*void OnDrawGizmosSelected()
     {
          // Draw a yellow sphere at the transform's position
          Gizmos.color = Color.yellow;
          Gizmos.DrawWireSphere(transform.position, GrabDistance);
-    }
+         Gizmos.color = Color.blue;
+         Gizmos.DrawLine(transform.position, transform.InverseTransformDirection(myRB.velocity)+ transform.position);
+    }*/
 }
