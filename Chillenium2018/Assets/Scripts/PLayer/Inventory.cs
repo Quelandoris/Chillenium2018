@@ -11,7 +11,14 @@ public class Inventory : MonoBehaviour {
     public Artifacts[] inventory = new Artifacts[5];
     public int curInventory=0;
     public GameObject bomb;
+    public GameObject sandguardian;
     public Sprite TestSprite;
+    private Rigidbody2D myRB;
+
+    private void Start()
+    {
+        myRB = GetComponent<Rigidbody2D>();   
+    }
 
 
     void Update ()
@@ -24,8 +31,9 @@ public class Inventory : MonoBehaviour {
                     //Do a thing
                     break;
                 case Artifacts.swordofthesea:
-                    var curDirection = transform.InverseTransformDirection(myRB.velocity) + transform.position;
-                    Physics2D.CircleCastAll(PLayerControls.transform.position, 3f, Vector2)
+                    /*var curDirection = transform.InverseTransformDirection(myRB.velocity) + transform.position;
+                    RaycastHit2D[] circlehit = Physics2D.CircleCastAll(transform.position, 3f, curDirection);
+                    foreach (RaycastHit2D ray in circlehits3)
                     Vector3 vectorToCollider = (collider.transform.position - player.transform.position).Normalize();
                     // 180 degree arc, change 0 to 0.5 for a 90 degree "pie"
                     if (Vector3.Dot(vectorToCollider, curDirection)) > 0.5)
@@ -34,34 +42,35 @@ public class Inventory : MonoBehaviour {
                        }
                     break;
                 case Artifacts.tentacleextention:
-                    var curDirection = transform.InverseTransformDirection(myRB.velocity) + transform.position;
+                    var curDirection2 = transform.InverseTransformDirection(myRB.velocity) + transform.position;
                     //extend+pull enemy
                     break;
                 case Artifacts.icedaggers:
-                    var curDirection = transform.InverseTransformDirection(myRB.velocity) + transform.position;
-                    Physics2D.CircleCastAll(PLayerControls.transform.position, 3f, Vector2)
-                    Vector3 vectorToCollider = (collider.transform.position - player.transform.position).Normalize();
+                    /*var curDirection3 = transform.InverseTransformDirection(myRB.velocity) + transform.position;
+                    RaycastHit2D[] circlehits3 = Physics2D.CircleCastAll(transform.position, 3f, curDirection3);
+                    foreach (RaycastHit2D ray in circlehits3)
+                    Vector3 vectorToCollider3 = (collider.transform.position - player.transform.position).Normalize();
                     // 180 degree arc, change 0 to 0.5 for a 90 degree "pie"
-                    if (Vector3.Dot(vectorToCollider, curDirection)) > 0.5)
+                    if (Vector3.Dot(vectorToCollider3, curDirection3)) > 0.5)
                        {
                         //Freeze the enemy for 6 seconds
-                       }
+                       }*/
                     break;
                 case Artifacts.bombs:
-                   Instantiate(Bomb)
+                    Instantiate(bomb, transform.position, transform.rotation);
                     //time activated
                     break;
                 case Artifacts.mines:
                    //contact activated
                     break;
                 case Artifacts.sandguardian:
-                    //Do a thing
+                    Instantiate(sandguardian, transform.position, transform.rotation);
                     break;
                 case Artifacts.fogfigurine:
                     //Do a thing
                     break;
                 case Artifacts.duplicitydisk:
-                    //Do a thing
+                    //creates decoy
                     break;
                 case Artifacts.shiningshield:
                     //Do a thing
