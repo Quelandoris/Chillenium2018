@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class bombscript : MonoBehaviour {
 
+    //Ressie's inprogress work for 
+
     public int timer;
 	// Use this for initialization
 	void Start () {
