@@ -26,7 +26,7 @@ public class PLayerControls : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        PlayerMovement();
+        if(!movelock) PlayerMovement();
         Pickup();
         CheckGrabbable();
         Build();
@@ -88,6 +88,7 @@ public class PLayerControls : MonoBehaviour {
     //X to pickup object when nearby
     void Pickup()
     {
+
         if (Input.GetKeyDown(KeyCode.X))
         {
             

@@ -11,6 +11,6 @@ public class Inven : MonoBehaviour {
     public void UpdateSlot(int slotNum, Sprite invSprite)
     {
         //InvSlotsUI[slotNum].GetComponent<Text>().text = invName;
-        InvSlotsUI[slotNum].GetComponent<Image>().sprite = TestSprite;
+        InvSlotsUI[slotNum].GetComponent<Image>().sprite = invSprite;
     }
 }
