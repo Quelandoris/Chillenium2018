@@ -54,8 +54,10 @@ public class Liftable : MonoBehaviour {
         else buildProgBar.fillAmount = 1;
         if (buildProg >= 1)
         {
-            Instantiate(toBuild, TheGrid.NearestPointOnGrid(transform.position), transform.rotation);
             Destroy(gameObject);
+            Instantiate(toBuild, TheGrid.NearestPointOnGrid(transform.position), transform.rotation);
+            TheGrid.CreateOrDestroy(TheGrid.NearestPointOnGrid(transform.position), true);
+            
         }
     }
     public void CancelBuild()
