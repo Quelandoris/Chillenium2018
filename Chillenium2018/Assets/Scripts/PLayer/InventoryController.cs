@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class Inven : MonoBehaviour {
 
+    //Ressie's In-prog inventory
+
     public GameObject[] InvSlotsUI = new GameObject[5];
 
     // Update is called once per frame
